@@ -23,7 +23,7 @@ namespace lesson3homework
                         {
                             if (charCount.ContainsKey(str[i]))
                             {
-                                charCount[str[i]] = charCount[str[i]] + 1;
+                                charCount[str[i]]++;
                             }
                             else
                               charCount.Add(str[i], 1);
