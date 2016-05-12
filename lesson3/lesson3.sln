@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson3task1", "lesson3task1\lesson3task1.csproj", "{2B59DFF0-E213-4E97-B7C3-CE87A2980865}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson3homework", "lesson3homework\lesson3homework.csproj", "{D6E97303-C314-4654-AB17-A092D55D64E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson3homework", "lesson3homework1\lesson3homework.csproj", "{D6E97303-C314-4654-AB17-A092D55D64E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson3homework2", "lesson3homework2\lesson3homework2.csproj", "{71C4E2B8-1DB8-46EE-8FA9-745EE27FF60D}"
 EndProject
