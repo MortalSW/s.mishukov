@@ -145,11 +145,11 @@ namespace lesson7homework
             
             for (int i = 0; i<5; i++)
             {
-                arrFraction[i] = new Fraction(rnd.Next(-100, 100),rnd.Next(1,100));
+                arrFraction[i] = new Fraction { upPart = rnd.Next(-100, 100), downPart = rnd.Next(1, 100) };
                 arrFraction[i].Print();
             }
 
-            Fraction sum = new Fraction(0,1);
+            Fraction sum = new Fraction();
             foreach (Fraction i in arrFraction)
             {
                 sum.Add(sum, i); // но мы ведь делаем неизменямую структуру :( так по идее низя.
