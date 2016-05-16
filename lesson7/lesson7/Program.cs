@@ -8,8 +8,8 @@ namespace lesson7homework
 {
     struct Fraction : IComparable
     {
-        public decimal upPart;
-        public decimal downPart;
+        public decimal upPart { get; private set; }
+        public decimal downPart { get; private set; }
 
         public Fraction(decimal upPart, decimal downPart)
         {
@@ -25,7 +25,7 @@ namespace lesson7homework
             }
             Simplify();
         }
-        
+
         public int CompareTo(object obj)
         {
             Fraction comparedFraction = (Fraction)obj;
@@ -33,16 +33,16 @@ namespace lesson7homework
             decimal f2UpPart = comparedFraction.upPart * downPart;
             if (f1UpPart > f2UpPart)
             {
-                return -1;
+                return 1;
             }
             else
             if (f1UpPart < f2UpPart)
             {
-                return 1;
+                return -1;
             }
             return 0;
         }
-       
+
         public void Print()
         {
             Console.WriteLine("{0} / {1}", upPart, downPart);
@@ -62,7 +62,7 @@ namespace lesson7homework
         public void Add(Fraction f)
         {
             Fraction thisFraction = new Fraction { upPart = this.upPart, downPart = this.downPart };
-            Fraction newFraction = new Fraction().Add(thisFraction,f);
+            Fraction newFraction = new Fraction().Add(thisFraction, f);
             this.downPart = newFraction.downPart;
             this.upPart = newFraction.upPart;
         }
@@ -149,6 +149,24 @@ namespace lesson7homework
 
             if (isNeedToSimple) Simplify();
         }
+        public static Fraction operator >(Fraction f1,Fraction f2)
+        {
+            bool status = false;
+            Fraction f3 = new Fraction(f1.upPart * f2.downPart, f1.downPart * f2.downPart);
+            Fraction f4 = new Fraction(f2.upPart * f1.downPart, f2.downPart * f1.downPart);
+            if (f3.upPart > f4.upPart) status = true;
+            return status;
+        }
+        public static Fraction operator <(Fraction f1, Fraction f2)
+        {
+            bool status = false;
+            Fraction f3 = new Fraction(f1.upPart * f2.downPart, f1.downPart * f2.downPart);
+            Fraction f4 = new Fraction(f2.upPart * f1.downPart, f2.downPart * f1.downPart);
+            if (f3.upPart < f4.upPart) status = true;
+            return status;
+        }
+
+
     }
 
     class Program
@@ -173,34 +191,38 @@ namespace lesson7homework
             fraction1.Print();
 
             Console.WriteLine("Сравнение");
-            Console.WriteLine(fraction1.CompareTo(fraction2)+"\n");
+            Console.WriteLine(fraction1.CompareTo(fraction2) + "\n");
             //if (fraction1 > fraction2) Console.WriteLine("{0} > {1}",fraction1.Print,fraction2.Print); 
-            // не работает :(
+            //а оверрайды на типовые матоперации можно делать? наверно да.
 
-            const int n = 5;
 
-            Fraction[] arrFraction = new Fraction[n];
+            const int N = 5;
+            List<Fraction> listFraction = new List<Fraction>();
+
             Random rnd = new Random();
-            
-            for (int i = 0; i<5; i++)
+            for (int i = 0; i < N; i++)
             {
-                arrFraction[i] = new Fraction { upPart = rnd.Next(-10, 10), downPart = rnd.Next(1, 10) };
-                arrFraction[i].Print();
+                listFraction.Add(new Fraction(rnd.Next(-10, 10), rnd.Next(1, 10)));
+                listFraction[i].Print();
             }
 
-            Fraction sum = new Fraction(0,1);
+            Fraction sum = new Fraction(0, 1);
 
             Console.WriteLine("просуммируем");
-            foreach (Fraction i in arrFraction)
+            foreach (Fraction i in listFraction)
             {
-                Console.WriteLine("sum: {0} i {1}",sum.ToString(),i.ToString());
+                Console.WriteLine("i: {0} sum: {1}", i.ToString(), sum.ToString()); //почемуто генерятся лишние {}
                 sum.Add(i);
             }
-
             sum.Print();
 
-            //arrFraction.Sort();
-            // Не понимаю почему не заработало. вроде всё описал...
+            listFraction.Sort();
+            Console.WriteLine();
+
+            foreach (Fraction i in listFraction)
+            {
+                i.Print();
+            }
 
             Console.ReadKey();
         }
