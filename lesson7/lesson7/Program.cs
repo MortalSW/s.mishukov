@@ -49,7 +49,7 @@ namespace lesson7homework
         }
         public override string ToString()
         {
-            return $"{{{upPart}}} / {{{downPart}}}";
+            return $"{upPart} / {downPart}"; // тут ты в лекции что-то напутал. вот так работает гуд, а если куча скобок, лишние выдает
         }
         public Fraction Add(Fraction f1, Fraction f2)
         {
@@ -132,7 +132,7 @@ namespace lesson7homework
             decimal max = Math.Max(Math.Abs(upPart), Math.Abs(downPart));
             HashSet<decimal> simpleDecimals = new HashSet<decimal>();
 
-            for (decimal i = 2; i < max; i++)
+            for (decimal i = 2; i <= max; i++)
             {
                 if (isSimpleDigit(i)) simpleDecimals.Add(i);
             }
@@ -146,10 +146,9 @@ namespace lesson7homework
                     isNeedToSimple = true;
                 }
             }
-
             if (isNeedToSimple) Simplify();
         }
-        public static Fraction operator >(Fraction f1,Fraction f2)
+        public static bool operator >(Fraction f1,Fraction f2)
         {
             bool status = false;
             Fraction f3 = new Fraction(f1.upPart * f2.downPart, f1.downPart * f2.downPart);
@@ -157,7 +156,7 @@ namespace lesson7homework
             if (f3.upPart > f4.upPart) status = true;
             return status;
         }
-        public static Fraction operator <(Fraction f1, Fraction f2)
+        public static bool operator <(Fraction f1, Fraction f2)
         {
             bool status = false;
             Fraction f3 = new Fraction(f1.upPart * f2.downPart, f1.downPart * f2.downPart);
@@ -165,17 +164,15 @@ namespace lesson7homework
             if (f3.upPart < f4.upPart) status = true;
             return status;
         }
-
-
     }
 
     class Program
     {
         static void Main(string[] args)
         {
-            Fraction fraction1 = new Fraction(2, 3);
+            Fraction fraction1 = new Fraction(1, 2);
             fraction1.Print();
-            Fraction fraction2 = new Fraction(2, 3);
+            Fraction fraction2 = new Fraction(1, 2);
             fraction2.Print();
             Fraction fraction3 = new Fraction().Add(fraction1, fraction2);
             fraction3.Print();
@@ -186,16 +183,27 @@ namespace lesson7homework
             Fraction fraction6 = new Fraction().Multiply(fraction1, fraction2);
             fraction6.Print();
 
-            Console.WriteLine("Add in");
+            Console.WriteLine("\nСравнение");
+            if (fraction1 > fraction2)
+            {
+                Console.WriteLine("{0} > {1}", fraction1.ToString(), fraction2.ToString());
+            }
+            else
+            {
+                if (fraction1 < fraction2) {
+                    Console.WriteLine("{0} < {1}", fraction1.ToString(), fraction2.ToString());
+                }
+                else
+                {
+                    Console.WriteLine("{0} = {1}", fraction1.ToString(), fraction2.ToString());
+                }
+            }
+
+            Console.WriteLine("\nAdd to");
             fraction1.Add(fraction2);
             fraction1.Print();
 
-            Console.WriteLine("Сравнение");
-            Console.WriteLine(fraction1.CompareTo(fraction2) + "\n");
-            //if (fraction1 > fraction2) Console.WriteLine("{0} > {1}",fraction1.Print,fraction2.Print); 
-            //а оверрайды на типовые матоперации можно делать? наверно да.
-
-
+            Console.WriteLine("\nList of random fractions");
             const int N = 5;
             List<Fraction> listFraction = new List<Fraction>();
 
@@ -208,23 +216,26 @@ namespace lesson7homework
 
             Fraction sum = new Fraction(0, 1);
 
-            Console.WriteLine("просуммируем");
+            Console.WriteLine("\nПросуммируем");
             foreach (Fraction i in listFraction)
             {
-                Console.WriteLine("i: {0} sum: {1}", i.ToString(), sum.ToString()); //почемуто генерятся лишние {}
                 sum.Add(i);
+                Console.WriteLine("i: {0} sum: {1}", i.ToString(), sum.ToString()); //почемуто генерятся лишние {}
             }
             sum.Print();
 
             listFraction.Sort();
             Console.WriteLine();
-
             foreach (Fraction i in listFraction)
             {
                 i.Print();
             }
 
+            Console.WriteLine("Press a key to exit");
             Console.ReadKey();
+
+            // в итоге как оказалось можно создать операнды математические для структуры... а не как я сделал 
+            // особо не стал заморачиваться, ибо понял это в сравнении дфух дробей
         }
     }
 }
