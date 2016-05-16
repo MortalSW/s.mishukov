@@ -47,6 +47,10 @@ namespace lesson7homework
         {
             Console.WriteLine("{0} / {1}", upPart, downPart);
         }
+        public override string ToString()
+        {
+            return $"{{{upPart}}} / {{{downPart}}}";
+        }
         public Fraction Add(Fraction f1, Fraction f2)
         {
             Fraction f3 = new Fraction();
@@ -55,6 +59,14 @@ namespace lesson7homework
             f3.Simplify();
             return f3;
         }
+        public void Add(Fraction f)
+        {
+            Fraction thisFraction = new Fraction { upPart = this.upPart, downPart = this.downPart };
+            Fraction newFraction = new Fraction().Add(thisFraction,f);
+            this.downPart = newFraction.downPart;
+            this.upPart = newFraction.upPart;
+        }
+
         public Fraction Sub(Fraction f1, Fraction f2)
         {
             Fraction f3 = new Fraction();
@@ -62,6 +74,13 @@ namespace lesson7homework
             f3.upPart = f1.upPart * f2.downPart - f2.upPart * f1.downPart;
             f3.Simplify();
             return f3;
+        }
+        public void Sub(Fraction f)
+        {
+            Fraction thisFraction = new Fraction { upPart = this.upPart, downPart = this.downPart };
+            Fraction newFraction = new Fraction().Sub(thisFraction, f);
+            this.downPart = newFraction.downPart;
+            this.upPart = newFraction.upPart;
         }
         public Fraction Multiply(Fraction f1, Fraction f2)
         {
@@ -71,6 +90,13 @@ namespace lesson7homework
             //if (f3.upPart == 0) f3.downPart = 1;
             f3.Simplify();
             return f3;
+        }
+        public void Multiply(Fraction f)
+        {
+            Fraction thisFraction = new Fraction { upPart = this.upPart, downPart = this.downPart };
+            Fraction newFraction = new Fraction().Multiply(thisFraction, f);
+            this.downPart = newFraction.downPart;
+            this.upPart = newFraction.upPart;
         }
         public Fraction Divide(Fraction f1, Fraction f2)
         {
@@ -86,7 +112,14 @@ namespace lesson7homework
             f3.Simplify();
             return f3;
         }
-        public bool isSimpleDigit(decimal digit)
+        public void Divide(Fraction f)
+        {
+            Fraction thisFraction = new Fraction { upPart = this.upPart, downPart = this.downPart };
+            Fraction newFraction = new Fraction().Divide(thisFraction, f);
+            this.downPart = newFraction.downPart;
+            this.upPart = newFraction.upPart;
+        }
+        private bool isSimpleDigit(decimal digit)
         {
             bool isSimple = true;
             for (int i = 2; i < digit; i++)
@@ -135,8 +168,14 @@ namespace lesson7homework
             Fraction fraction6 = new Fraction().Multiply(fraction1, fraction2);
             fraction6.Print();
 
+            Console.WriteLine("Add in");
+            fraction1.Add(fraction2);
+            fraction1.Print();
+
             Console.WriteLine("Сравнение");
             Console.WriteLine(fraction1.CompareTo(fraction2)+"\n");
+            //if (fraction1 > fraction2) Console.WriteLine("{0} > {1}",fraction1.Print,fraction2.Print); 
+            // не работает :(
 
             const int n = 5;
 
@@ -145,16 +184,17 @@ namespace lesson7homework
             
             for (int i = 0; i<5; i++)
             {
-                arrFraction[i] = new Fraction { upPart = rnd.Next(-100, 100), downPart = rnd.Next(1, 100) };
+                arrFraction[i] = new Fraction { upPart = rnd.Next(-10, 10), downPart = rnd.Next(1, 10) };
                 arrFraction[i].Print();
             }
 
-            Fraction sum = new Fraction();
+            Fraction sum = new Fraction(0,1);
+
+            Console.WriteLine("просуммируем");
             foreach (Fraction i in arrFraction)
             {
-                sum.Add(sum, i); // но мы ведь делаем неизменямую структуру :( так по идее низя.
-                // ну и не работает соответственно. если вот сделать каждый раз новую структуру и в неё писать результат
-                // то заработает всё
+                Console.WriteLine("sum: {0} i {1}",sum.ToString(),i.ToString());
+                sum.Add(i);
             }
 
             sum.Print();
