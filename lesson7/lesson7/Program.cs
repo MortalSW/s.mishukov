@@ -201,7 +201,7 @@ namespace lesson7homework
             foreach (Fraction i in listFraction)
             {
                 sum = sum.Add(i);
-                Console.WriteLine("i: {0} sum: {1}", i.ToString(), sum.ToString()); //почемуто генерятся лишние {}
+                Console.WriteLine("i: {0} sum: {1}", i.ToString(), sum.ToString());
             }
             sum.Print();
 
