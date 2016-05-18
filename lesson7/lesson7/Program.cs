@@ -10,7 +10,7 @@ namespace lesson7homework
     {
         public int upPart { get; }
         public int downPart { get; }
-        private int GCD(int a, int b)
+        private int GreatestCommonDivisor(int a, int b)
         {
             int r;
             while (b != 0)
@@ -21,10 +21,9 @@ namespace lesson7homework
             }
             return a;
         }
-        public Fraction(int inUpPart, int inDownPart)
+        public Fraction(int inUpPart, int inDownPart) : this() // ох уж и намучился я с этим this вернее с его отсутствием, зато кровью понял
+                                                               // что объект должен быть перед использованием быть инициализированным гад
         {
-            upPart = inUpPart / GCD(inUpPart, inDownPart);
-            downPart = inDownPart / GCD(inUpPart, inDownPart);
             if (inDownPart == 0)
             {
                 throw new DivideByZeroException();
@@ -34,9 +33,9 @@ namespace lesson7homework
             {
                 downPart = 1;
             }
-            //Simplify();
+            upPart = inUpPart / GreatestCommonDivisor(inUpPart, inDownPart);
+            downPart = inDownPart / GreatestCommonDivisor(inUpPart, inDownPart);
         }
-
         public int CompareTo(object obj)
         {
             Fraction comparedFraction = (Fraction)obj;
@@ -110,38 +109,6 @@ namespace lesson7homework
             Fraction newFraction = new Fraction().Divide(thisFraction, f);
             return newFraction;
         }
-/*        private bool isSimpleDigit(int digit)
-        {
-            bool isSimple = true;
-            for (int i = 2; i < digit; i++)
-                if ((digit % i) == 0) isSimple = false;
-            return isSimple;
-        }
-*/
-
-/*        public void Simplify()
-        {
-            bool isNeedToSimple = false;
-            int max = Math.Max(Math.Abs(upPart), Math.Abs(downPart));
-            HashSet<int> simpleints = new HashSet<int>();
-
-            for (int i = 2; i <= max; i++)
-            {
-                if (isSimpleDigit(i)) simpleints.Add(i);
-            }
-
-            foreach (int simpleDigit in simpleints)
-            {
-                if (upPart % simpleDigit == 0 && downPart % simpleDigit == 0)
-                {
-                    //downPart = downPart / simpleDigit; // сделали структуру неизменяемой, теперь как???
-                    //upPart = upPart / simpleDigit; // 
-                    //isNeedToSimple = true;
-                }
-            }
-            if (isNeedToSimple) Simplify();
-        }
-*/
         public static bool operator >(Fraction f1, Fraction f2)
         {
             return (f1.upPart * f2.downPart > f2.upPart * f1.downPart);
@@ -154,6 +121,17 @@ namespace lesson7homework
 
     class Program
     {
+        public static int GCD(int a, int b)
+        {
+            int r;
+            while (b != 0)
+            {
+                r = a % b;
+                a = b;
+                b = r;
+            }
+            return a;
+        }
         static void Main(string[] args)
         {
             Fraction fraction1 = new Fraction(1, 2);
