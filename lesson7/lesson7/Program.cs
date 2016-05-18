@@ -121,17 +121,6 @@ namespace lesson7homework
 
     class Program
     {
-        public static int GCD(int a, int b)
-        {
-            int r;
-            while (b != 0)
-            {
-                r = a % b;
-                a = b;
-                b = r;
-            }
-            return a;
-        }
         static void Main(string[] args)
         {
             Fraction fraction1 = new Fraction(1, 2);
