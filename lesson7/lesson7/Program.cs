@@ -8,10 +8,10 @@ namespace lesson7homework
 {
     struct Fraction : IComparable
     {
-        public decimal upPart { get; private set; }
-        public decimal downPart { get; private set; }
+        public int upPart { get; }
+        public int downPart { get; }
 
-        public Fraction(decimal upPart, decimal downPart)
+        public Fraction(int upPart, int downPart)
         {
             this.upPart = upPart;
             if (downPart == 0)
@@ -29,8 +29,8 @@ namespace lesson7homework
         public int CompareTo(object obj)
         {
             Fraction comparedFraction = (Fraction)obj;
-            decimal f1UpPart = upPart * comparedFraction.downPart;
-            decimal f2UpPart = comparedFraction.upPart * downPart;
+            int f1UpPart = upPart * comparedFraction.downPart;
+            int f2UpPart = comparedFraction.upPart * downPart;
             if (f1UpPart > f2UpPart)
             {
                 return 1;
@@ -53,73 +53,62 @@ namespace lesson7homework
         }
         public Fraction Add(Fraction f1, Fraction f2)
         {
-            Fraction f3 = new Fraction();
-            f3.downPart = f1.downPart * f2.downPart;
-            f3.upPart = f1.upPart * f2.downPart + f2.upPart * f1.downPart;
+            Fraction f3 = new Fraction(f1.upPart * f2.downPart + f2.upPart * f1.downPart, f1.downPart * f2.downPart);
             f3.Simplify();
             return f3;
         }
-        public void Add(Fraction f)
+        public Fraction Add(Fraction f)
         {
-            Fraction thisFraction = new Fraction { upPart = this.upPart, downPart = this.downPart };
+            Fraction thisFraction = new Fraction(this.upPart, this.downPart);
             Fraction newFraction = new Fraction().Add(thisFraction, f);
-            this.downPart = newFraction.downPart;
-            this.upPart = newFraction.upPart;
+            return newFraction;
         }
 
         public Fraction Sub(Fraction f1, Fraction f2)
         {
-            Fraction f3 = new Fraction();
-            f3.downPart = f1.downPart * f2.downPart;
-            f3.upPart = f1.upPart * f2.downPart - f2.upPart * f1.downPart;
+            Fraction f3 = new Fraction(f1.upPart * f2.downPart - f2.upPart * f1.downPart, f1.downPart * f2.downPart);
             f3.Simplify();
             return f3;
         }
-        public void Sub(Fraction f)
+        public Fraction Sub(Fraction f)
         {
-            Fraction thisFraction = new Fraction { upPart = this.upPart, downPart = this.downPart };
+            Fraction thisFraction = new Fraction(this.upPart, this.downPart);
             Fraction newFraction = new Fraction().Sub(thisFraction, f);
-            this.downPart = newFraction.downPart;
-            this.upPart = newFraction.upPart;
+            return newFraction;
         }
         public Fraction Multiply(Fraction f1, Fraction f2)
         {
-            Fraction f3 = new Fraction();
-            f3.downPart = f1.downPart * f2.downPart;
-            f3.upPart = f1.upPart * f2.upPart;
-            //if (f3.upPart == 0) f3.downPart = 1;
+            Fraction f3 = new Fraction(f1.upPart * f2.upPart, f1.downPart * f2.downPart);
             f3.Simplify();
             return f3;
         }
-        public void Multiply(Fraction f)
+        public Fraction Multiply(Fraction f)
         {
-            Fraction thisFraction = new Fraction { upPart = this.upPart, downPart = this.downPart };
+            Fraction thisFraction = new Fraction(this.upPart, this.downPart);
             Fraction newFraction = new Fraction().Multiply(thisFraction, f);
-            this.downPart = newFraction.downPart;
-            this.upPart = newFraction.upPart;
+            return newFraction;
         }
         public Fraction Divide(Fraction f1, Fraction f2)
         {
-            Fraction f3 = new Fraction();
-            f3.downPart = f1.downPart * f2.upPart;
-            f3.upPart = f1.upPart * f2.downPart;
+            int downPart = f1.downPart * f2.upPart;
+            int upPart = f1.upPart * f2.downPart;
             if (f2.upPart < 0)
             {
-                f3.downPart *= -1;
-                f3.upPart *= -1;
+                downPart *= -1;
+                upPart *= -1;
             }
-            if (f3.downPart == 0) throw new DivideByZeroException();
+            if (downPart == 0) throw new DivideByZeroException();
+            Fraction f3 = new Fraction(upPart,downPart);
             f3.Simplify();
             return f3;
         }
-        public void Divide(Fraction f)
+        public Fraction Divide(Fraction f)
         {
-            Fraction thisFraction = new Fraction { upPart = this.upPart, downPart = this.downPart };
+            Fraction thisFraction = new Fraction(this.upPart, this.downPart);
             Fraction newFraction = new Fraction().Divide(thisFraction, f);
-            this.downPart = newFraction.downPart;
-            this.upPart = newFraction.upPart;
+            return newFraction;
         }
-        private bool isSimpleDigit(decimal digit)
+        private bool isSimpleDigit(int digit)
         {
             bool isSimple = true;
             for (int i = 2; i < digit; i++)
@@ -129,40 +118,32 @@ namespace lesson7homework
         public void Simplify()
         {
             bool isNeedToSimple = false;
-            decimal max = Math.Max(Math.Abs(upPart), Math.Abs(downPart));
-            HashSet<decimal> simpleDecimals = new HashSet<decimal>();
+            int max = Math.Max(Math.Abs(upPart), Math.Abs(downPart));
+            HashSet<int> simpleints = new HashSet<int>();
 
-            for (decimal i = 2; i <= max; i++)
+            for (int i = 2; i <= max; i++)
             {
-                if (isSimpleDigit(i)) simpleDecimals.Add(i);
+                if (isSimpleDigit(i)) simpleints.Add(i);
             }
 
-            foreach (decimal simpleDigit in simpleDecimals)
+            foreach (int simpleDigit in simpleints)
             {
                 if (upPart % simpleDigit == 0 && downPart % simpleDigit == 0)
                 {
-                    downPart = downPart / simpleDigit;
-                    upPart = upPart / simpleDigit;
-                    isNeedToSimple = true;
+                    //downPart = downPart / simpleDigit; // сделали структуру неизменяемой, теперь как???
+                    //upPart = upPart / simpleDigit; // 
+                    //isNeedToSimple = true;
                 }
             }
             if (isNeedToSimple) Simplify();
         }
         public static bool operator >(Fraction f1,Fraction f2)
         {
-            bool status = false;
-            Fraction f3 = new Fraction(f1.upPart * f2.downPart, f1.downPart * f2.downPart);
-            Fraction f4 = new Fraction(f2.upPart * f1.downPart, f2.downPart * f1.downPart);
-            if (f3.upPart > f4.upPart) status = true;
-            return status;
+            return (f1.upPart * f2.downPart > f2.upPart * f1.downPart);
         }
         public static bool operator <(Fraction f1, Fraction f2)
         {
-            bool status = false;
-            Fraction f3 = new Fraction(f1.upPart * f2.downPart, f1.downPart * f2.downPart);
-            Fraction f4 = new Fraction(f2.upPart * f1.downPart, f2.downPart * f1.downPart);
-            if (f3.upPart < f4.upPart) status = true;
-            return status;
+            return (f1.upPart * f2.downPart < f2.upPart * f1.downPart);
         }
     }
 
@@ -200,7 +181,7 @@ namespace lesson7homework
             }
 
             Console.WriteLine("\nAdd to");
-            fraction1.Add(fraction2);
+            fraction1 = fraction1.Add(fraction2);
             fraction1.Print();
 
             Console.WriteLine("\nList of random fractions");
@@ -219,7 +200,7 @@ namespace lesson7homework
             Console.WriteLine("\nПросуммируем");
             foreach (Fraction i in listFraction)
             {
-                sum.Add(i);
+                sum = sum.Add(i);
                 Console.WriteLine("i: {0} sum: {1}", i.ToString(), sum.ToString()); //почемуто генерятся лишние {}
             }
             sum.Print();
