@@ -10,20 +10,31 @@ namespace lesson7homework
     {
         public int upPart { get; }
         public int downPart { get; }
-
-        public Fraction(int upPart, int downPart)
+        private int GCD(int a, int b)
         {
-            this.upPart = upPart;
-            if (downPart == 0)
+            int r;
+            while (b != 0)
+            {
+                r = a % b;
+                a = b;
+                b = r;
+            }
+            return a;
+        }
+        public Fraction(int inUpPart, int inDownPart)
+        {
+            upPart = inUpPart / GCD(inUpPart, inDownPart);
+            downPart = inDownPart / GCD(inUpPart, inDownPart);
+            if (inDownPart == 0)
             {
                 throw new DivideByZeroException();
             }
-            this.downPart = downPart;
-            if (upPart == 0)
+            downPart = inDownPart;
+            if (inUpPart == 0)
             {
-                this.downPart = 1;
+                downPart = 1;
             }
-            Simplify();
+            //Simplify();
         }
 
         public int CompareTo(object obj)
@@ -42,7 +53,6 @@ namespace lesson7homework
             }
             return 0;
         }
-
         public void Print()
         {
             Console.WriteLine("{0} / {1}", upPart, downPart);
@@ -53,9 +63,7 @@ namespace lesson7homework
         }
         public Fraction Add(Fraction f1, Fraction f2)
         {
-            Fraction f3 = new Fraction(f1.upPart * f2.downPart + f2.upPart * f1.downPart, f1.downPart * f2.downPart);
-            f3.Simplify();
-            return f3;
+            return new Fraction(f1.upPart * f2.downPart + f2.upPart * f1.downPart, f1.downPart * f2.downPart);
         }
         public Fraction Add(Fraction f)
         {
@@ -66,9 +74,7 @@ namespace lesson7homework
 
         public Fraction Sub(Fraction f1, Fraction f2)
         {
-            Fraction f3 = new Fraction(f1.upPart * f2.downPart - f2.upPart * f1.downPart, f1.downPart * f2.downPart);
-            f3.Simplify();
-            return f3;
+            return new Fraction(f1.upPart * f2.downPart - f2.upPart * f1.downPart, f1.downPart * f2.downPart);
         }
         public Fraction Sub(Fraction f)
         {
@@ -78,9 +84,7 @@ namespace lesson7homework
         }
         public Fraction Multiply(Fraction f1, Fraction f2)
         {
-            Fraction f3 = new Fraction(f1.upPart * f2.upPart, f1.downPart * f2.downPart);
-            f3.Simplify();
-            return f3;
+            return new Fraction(f1.upPart * f2.upPart, f1.downPart * f2.downPart);
         }
         public Fraction Multiply(Fraction f)
         {
@@ -98,9 +102,7 @@ namespace lesson7homework
                 upPart *= -1;
             }
             if (downPart == 0) throw new DivideByZeroException();
-            Fraction f3 = new Fraction(upPart,downPart);
-            f3.Simplify();
-            return f3;
+            return new Fraction(upPart, downPart);
         }
         public Fraction Divide(Fraction f)
         {
@@ -108,14 +110,16 @@ namespace lesson7homework
             Fraction newFraction = new Fraction().Divide(thisFraction, f);
             return newFraction;
         }
-        private bool isSimpleDigit(int digit)
+/*        private bool isSimpleDigit(int digit)
         {
             bool isSimple = true;
             for (int i = 2; i < digit; i++)
                 if ((digit % i) == 0) isSimple = false;
             return isSimple;
         }
-        public void Simplify()
+*/
+
+/*        public void Simplify()
         {
             bool isNeedToSimple = false;
             int max = Math.Max(Math.Abs(upPart), Math.Abs(downPart));
@@ -137,7 +141,8 @@ namespace lesson7homework
             }
             if (isNeedToSimple) Simplify();
         }
-        public static bool operator >(Fraction f1,Fraction f2)
+*/
+        public static bool operator >(Fraction f1, Fraction f2)
         {
             return (f1.upPart * f2.downPart > f2.upPart * f1.downPart);
         }
@@ -171,7 +176,8 @@ namespace lesson7homework
             }
             else
             {
-                if (fraction1 < fraction2) {
+                if (fraction1 < fraction2)
+                {
                     Console.WriteLine("{0} < {1}", fraction1.ToString(), fraction2.ToString());
                 }
                 else
