@@ -10,7 +10,7 @@ namespace lesson7homework
     {
         public int upPart { get; }
         public int downPart { get; }
-        private int GreatestCommonDivisor(int a, int b)
+        private static int GreatestCommonDivisor(int a, int b)
         {
             int r;
             while (b != 0)
@@ -20,6 +20,10 @@ namespace lesson7homework
                 b = r;
             }
             return a;
+        }
+        private Fraction ThisFraction()
+        {
+            return new Fraction(this.upPart, this.downPart);
         }
         public Fraction(int inUpPart, int inDownPart) : this() // ох уж и намучился я с этим this вернее с его отсутствием, зато кровью понял
                                                                // что объект должен быть перед использованием быть инициализированным гад
@@ -33,8 +37,9 @@ namespace lesson7homework
             {
                 downPart = 1;
             }
-            upPart = inUpPart / GreatestCommonDivisor(inUpPart, inDownPart);
-            downPart = inDownPart / GreatestCommonDivisor(inUpPart, inDownPart);
+            int gdc = GreatestCommonDivisor(inUpPart, inDownPart);
+            upPart = inUpPart / gdc;
+            downPart = inDownPart / gdc;
         }
         public int CompareTo(object obj)
         {
@@ -66,9 +71,7 @@ namespace lesson7homework
         }
         public Fraction Add(Fraction f)
         {
-            Fraction thisFraction = new Fraction(this.upPart, this.downPart);
-            Fraction newFraction = new Fraction().Add(thisFraction, f);
-            return newFraction;
+            return Add(ThisFraction(), f);
         }
 
         public Fraction Sub(Fraction f1, Fraction f2)
@@ -77,9 +80,7 @@ namespace lesson7homework
         }
         public Fraction Sub(Fraction f)
         {
-            Fraction thisFraction = new Fraction(this.upPart, this.downPart);
-            Fraction newFraction = new Fraction().Sub(thisFraction, f);
-            return newFraction;
+            return Sub(ThisFraction(), f);
         }
         public Fraction Multiply(Fraction f1, Fraction f2)
         {
@@ -87,9 +88,7 @@ namespace lesson7homework
         }
         public Fraction Multiply(Fraction f)
         {
-            Fraction thisFraction = new Fraction(this.upPart, this.downPart);
-            Fraction newFraction = new Fraction().Multiply(thisFraction, f);
-            return newFraction;
+            return Multiply(ThisFraction(), f);
         }
         public Fraction Divide(Fraction f1, Fraction f2)
         {
@@ -105,9 +104,7 @@ namespace lesson7homework
         }
         public Fraction Divide(Fraction f)
         {
-            Fraction thisFraction = new Fraction(this.upPart, this.downPart);
-            Fraction newFraction = new Fraction().Divide(thisFraction, f);
-            return newFraction;
+            return Divide(ThisFraction(), f);
         }
         public static bool operator >(Fraction f1, Fraction f2)
         {
@@ -188,9 +185,6 @@ namespace lesson7homework
             Console.WriteLine("Press a key to exit");
             Console.ReadKey();
 
-            // в итоге как оказалось можно создать операнды математические для структуры и юзать result = (fraction1 + fraction2)*fraction3
-            // а не как я сделал....
-            // особо сейчас не стал заморачиваться, ибо понял это в сравнении двух дробей
         }
     }
 }

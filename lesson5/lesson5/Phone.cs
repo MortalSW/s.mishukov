@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace lesson4
+namespace lesson5
 {
     class Phone
     {
         private int cityCode = -1;
         private uint phone;
 
-        public Phone(int cityCode,uint phone)
+        public Phone(int cityCode, uint phone)
         {
             this.cityCode = cityCode;
             this.phone = phone;
@@ -31,7 +31,7 @@ namespace lesson4
             else {
                 return $"{phone}";
             }
-            
+
         }
 
     }
