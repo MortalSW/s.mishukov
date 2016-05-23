@@ -21,10 +21,6 @@ namespace lesson7homework
             }
             return a;
         }
-        private Fraction ThisFraction()
-        {
-            return new Fraction(this.upPart, this.downPart);
-        }
         public Fraction(int inUpPart, int inDownPart) : this() // ох уж и намучился я с этим this вернее с его отсутствием, зато кровью понял
                                                                // что объект должен быть перед использованием быть инициализированным гад
         {
@@ -65,32 +61,19 @@ namespace lesson7homework
         {
             return $"{upPart} / {downPart}"; // тут ты в лекции что-то напутал. вот так работает гуд, а если куча скобок, лишние выдает
         }
-        public Fraction Add(Fraction f1, Fraction f2)
+        public static Fraction operator +(Fraction f1,Fraction f2)
         {
             return new Fraction(f1.upPart * f2.downPart + f2.upPart * f1.downPart, f1.downPart * f2.downPart);
         }
-        public Fraction Add(Fraction f)
-        {
-            return Add(ThisFraction(), f);
-        }
-
-        public Fraction Sub(Fraction f1, Fraction f2)
+        public static Fraction operator -(Fraction f1, Fraction f2)
         {
             return new Fraction(f1.upPart * f2.downPart - f2.upPart * f1.downPart, f1.downPart * f2.downPart);
         }
-        public Fraction Sub(Fraction f)
-        {
-            return Sub(ThisFraction(), f);
-        }
-        public Fraction Multiply(Fraction f1, Fraction f2)
+        public static Fraction operator *(Fraction f1, Fraction f2)
         {
             return new Fraction(f1.upPart * f2.upPart, f1.downPart * f2.downPart);
         }
-        public Fraction Multiply(Fraction f)
-        {
-            return Multiply(ThisFraction(), f);
-        }
-        public Fraction Divide(Fraction f1, Fraction f2)
+        public static Fraction operator /(Fraction f1, Fraction f2)
         {
             int downPart = f1.downPart * f2.upPart;
             int upPart = f1.upPart * f2.downPart;
@@ -101,10 +84,6 @@ namespace lesson7homework
             }
             if (downPart == 0) throw new DivideByZeroException();
             return new Fraction(upPart, downPart);
-        }
-        public Fraction Divide(Fraction f)
-        {
-            return Divide(ThisFraction(), f);
         }
         public static bool operator >(Fraction f1, Fraction f2)
         {
@@ -124,13 +103,13 @@ namespace lesson7homework
             fraction1.Print();
             Fraction fraction2 = new Fraction(1, 2);
             fraction2.Print();
-            Fraction fraction3 = new Fraction().Add(fraction1, fraction2);
+            Fraction fraction3 = fraction1 + fraction2;
             fraction3.Print();
-            Fraction fraction4 = new Fraction().Sub(fraction1, fraction2);
+            Fraction fraction4 = fraction1 - fraction2;
             fraction4.Print();
-            Fraction fraction5 = new Fraction().Divide(fraction1, fraction2);
+            Fraction fraction5 = fraction1 * fraction2;
             fraction5.Print();
-            Fraction fraction6 = new Fraction().Multiply(fraction1, fraction2);
+            Fraction fraction6 = fraction1 / fraction2;
             fraction6.Print();
 
             Console.WriteLine("\nСравнение");
@@ -150,10 +129,6 @@ namespace lesson7homework
                 }
             }
 
-            Console.WriteLine("\nAdd to");
-            fraction1 = fraction1.Add(fraction2);
-            fraction1.Print();
-
             Console.WriteLine("\nList of random fractions");
             const int N = 5;
             List<Fraction> listFraction = new List<Fraction>();
@@ -170,7 +145,7 @@ namespace lesson7homework
             Console.WriteLine("\nПросуммируем");
             foreach (Fraction i in listFraction)
             {
-                sum = sum.Add(i);
+                sum += i;
                 Console.WriteLine("i: {0} sum: {1}", i.ToString(), sum.ToString());
             }
             sum.Print();
