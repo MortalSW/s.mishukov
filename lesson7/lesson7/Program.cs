@@ -38,7 +38,7 @@ namespace lesson7homework
         {
             if (inDownPart == 0)
             {
-                throw new DivideByZeroException();
+                throw new DivideByZeroException("Нельзя делить на 0");
             }
             downPart = inDownPart;
             if (inUpPart == 0)
@@ -115,7 +115,7 @@ namespace lesson7homework
             fractionParameterless.Print();
             Fraction fraction1 = new Fraction(1, 2);
             fraction1.Print();
-            Fraction fraction2 = new Fraction(1, 2);
+            Fraction fraction2 = new Fraction(3, 2);
             fraction2.Print();
             Fraction fraction3 = fraction1 + fraction2;
             fraction3.Print();
@@ -123,8 +123,16 @@ namespace lesson7homework
             fraction4.Print();
             Fraction fraction5 = fraction1 * fraction2;
             fraction5.Print();
-            Fraction fraction6 = fraction1 / fraction2;
-            fraction6.Print();
+
+            try {
+                Fraction fraction6 = fraction1 / fraction2;
+                fraction6.Print();
+                Console.WriteLine("Деление успешно");
+            }
+            catch (DivideByZeroException)
+            {
+                Console.WriteLine("Попытка деления на 0");
+            }
 
             Console.WriteLine("\nСравнение");
             if (fraction1 > fraction2)
@@ -173,7 +181,6 @@ namespace lesson7homework
 
             Console.WriteLine("Press a key to exit");
             Console.ReadKey();
-
         }
     }
 }
