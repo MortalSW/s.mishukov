@@ -10,8 +10,18 @@ namespace lesson7homework
 {
     struct Fraction : IComparable
     {
+        private int tmpDownPart;
         public int upPart { get; }
-        public int downPart { get; }
+        public int downPart {
+            // решаем проблему new Fraction() parameterless,
+            // т.к. в структурах запрешено использование начального пустого конструктора
+            // но придется описать private set
+            get
+            {
+                return tmpDownPart == 0 ? 1 : tmpDownPart;  
+            }
+            private set { tmpDownPart = value; }
+        }
         private static int GreatestCommonDivisor(int a, int b)
         {
             int r;
@@ -101,6 +111,8 @@ namespace lesson7homework
     {
         static void Main(string[] args)
         {
+            Fraction fractionParameterless = new Fraction();
+            fractionParameterless.Print();
             Fraction fraction1 = new Fraction(1, 2);
             fraction1.Print();
             Fraction fraction2 = new Fraction(1, 2);
