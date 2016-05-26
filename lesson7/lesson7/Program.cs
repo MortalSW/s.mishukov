@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace lesson7homework
 {
-    struct Fraction : IComparable
+    public struct Fraction : IComparable
     {
         private int tmpDownPart;
         public int upPart { get; }
