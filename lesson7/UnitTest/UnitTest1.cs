@@ -44,8 +44,7 @@ namespace UnitTest
         [ExpectedException(typeof(DivideByZeroException))]
         public void TestZeroDownPart2()
         {
-                Fraction f = new Fraction(1, 0);
-         
+            Fraction f = new Fraction(1, 0);        
         }
     }
 }
