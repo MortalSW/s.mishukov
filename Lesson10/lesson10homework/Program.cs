@@ -17,22 +17,31 @@ namespace lesson10homework
             string text = File.ReadAllText(@"..\..\flowCards.Card.xml"); 
             XElement[] contactValues = XElement.Parse(text).Element("Contacts").Elements().ToArray();
 
-            using (StreamWriter promoContactsFile = new StreamWriter(@"..\..\promoContacts"))
-            using (StreamWriter usualContactsFile = new StreamWriter(@"..\..\usualContacts"))
+            try
             {
-                foreach (XElement contactValue in contactValues)
+                using (StreamWriter promoContactsFile = new StreamWriter(@"..\..\promo:Contacts"))
+                using (StreamWriter usualContactsFile = new StreamWriter(@"..\..\usualContacts"))
                 {
-                    if (contactValue.Attribute("IsPromotional").Value == "true" )
+                    foreach (XElement contactValue in contactValues)
                     {
-                        promoContactsFile.WriteLine(contactValue.Attribute("Value").Value + " [" + (contactValue.Attribute("Description") == null ? "" : contactValue.Attribute("Description").Value.ToString())+"]");
-                    }
-                    else
-                    {
-                        usualContactsFile.WriteLine(contactValue.Attribute("Value").Value + " [" + (contactValue.Attribute("Description") == null ? "" : contactValue.Attribute("Description").Value.ToString()) + "]");
+                        if (contactValue.Attribute("IsPromotional").Value == "true")
+                        {
+                            promoContactsFile.WriteLine(contactValue.Attribute("Value").Value + " [" + (contactValue.Attribute("Description") == null ? "" : contactValue.Attribute("Description").Value.ToString()) + "]");
+                        }
+                        else
+                        {
+                            usualContactsFile.WriteLine(contactValue.Attribute("Value").Value + " [" + (contactValue.Attribute("Description") == null ? "" : contactValue.Attribute("Description").Value.ToString()) + "]");
+                        }
                     }
                 }
             }
-            // А как правильно проверить в конструкции с using что файл на запись открылся корректно?
+            catch (Exception ex)
+            {
+                Console.WriteLine("Не смог записать в один из файлов");
+                throw ex;
+            }
+            // как бы вот так правильно try|catch. ну если мне не нужно сообщать что-то пока не закрыл открытое
+            // но как понять в каком файле проблема?
         }
     }
 }
