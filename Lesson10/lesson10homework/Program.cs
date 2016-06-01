@@ -10,6 +10,21 @@ namespace lesson10homework
 {
     class Program
     {
+        private static bool CanAccessFile(string FileName)
+        {
+            try
+            {
+                FileStream f = new FileInfo(FileName).Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+                f.Dispose();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Cannot open " + FileName + " for writing");
+                Console.WriteLine("Exception: " + ex.Message);
+            }
+            return false;
+        }
         static void Main(string[] args)
         {
             //вот так мне не оч нравится. как лучше доставать директорию проекта?
@@ -17,7 +32,7 @@ namespace lesson10homework
             string text = File.ReadAllText(@"..\..\flowCards.Card.xml"); 
             XElement[] contactValues = XElement.Parse(text).Element("Contacts").Elements().ToArray();
 
-            try
+            if (CanAccessFile(@"..\..\promoContacts") && CanAccessFile(@"..\..\usualContacts"))
             {
                 using (StreamWriter promoContactsFile = new StreamWriter(@"..\..\promo:Contacts"))
                 using (StreamWriter usualContactsFile = new StreamWriter(@"..\..\usualContacts"))
@@ -35,14 +50,8 @@ namespace lesson10homework
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Не смог записать в один из файлов");
-                Console.ReadKey();
-            }
-            // как бы вот так правильно try|catch. ну если мне не нужно сообщать что-то, пока не закрыл открытое.
-            // но как понять в каком файле проблема? или печально делить на 2 шага? сначала писать в файло рекламные, 
-            // потом в другом using - обычные?
+            Console.WriteLine("Press a key to exit");
+            Console.ReadKey();
         }
     }
 }
