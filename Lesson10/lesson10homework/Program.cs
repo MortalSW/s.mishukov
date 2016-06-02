@@ -10,7 +10,7 @@ namespace lesson10homework
 {
     class Program
     {
-        private static void rethrowEx(string fileName, Exception ex)
+        private static void showEx(string fileName, Exception ex)
         {
             Console.WriteLine("Cannot open " + fileName);
             Console.WriteLine("Exception: " + ex.Message);
@@ -50,17 +50,17 @@ namespace lesson10homework
                     }
                     catch (Exception ex)
                     {
-                        rethrowEx(usualFileName, ex);
+                        showEx(usualFileName, ex);
                     }
                 }
                 catch (Exception ex)
                 {
-                    rethrowEx(promoFileName, ex);
+                    showEx(promoFileName, ex);
                 }
             }
             catch (Exception ex)
             {
-                rethrowEx(cardFile, ex);
+                showEx(cardFile, ex);
             }
 
             Console.WriteLine("Press a key to exit");

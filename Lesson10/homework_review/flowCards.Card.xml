@@ -1,0 +1,60 @@
+﻿<Card Code="70000001000138126" FirmCode="70000001000128047" Type="POS" Name="Уралпромтехцентр, научно-производственное предприятие" BranchCode="15" IsHeadCard="true" IsLocal="true" LocalityVerification="false" IsHidden="false" IsArchived="false" CreationBy="28a0b40d-217f-11e2-82c6-003048f96e90" CreationDate="2012-07-05T09:35:22.54" CheckedDate="2012-10-09T07:45:57.52" CheckingBy="28a0b40d-217f-11e2-82c6-003048f96e90" >
+  <Address UnrecognizedPart="69г" CityCode="1267230100684825" StreetCode="1267449144021285" Text="Челябинск, Блюхера, 69г" ReferencePoint="15 офис; 2 этаж" PromotionalReferencePoint="3 этаж, 5 кабинет, синяя дверь слева"/>
+  <Contacts>
+    <Phone Code="12345678" CountryCode="5" ZoneCode="48" NationalPrefixCode="5" CanReceiveFax="false" Value="2623663" AdditionalValue="34" Alias="8 (383) 262-36-63" FormatCode="15000" Description="Телефон боса" IsPromotional="false" IsCommonContact="false" ContactPerson="Иван Сидорович Петров" IsHidden="false" IsArchived="false" NotPublish="false" ModificationDate="2014-01-10T09:35:22.54" Type="Landline"/>
+    <Fax Code="12345458" CountryCode="5" ZoneCode="48" NationalPrefixCode="5" Value="2624854" AdditionalValue="5" Alias="8 (383) 262-4854" FormatCode="15000" Description="Главный факс" IsPromotional="false" IsCommonContact="true" IsHidden="false" IsArchived="false" NotPublish="false" ModificationDate="2014-01-10T09:35:22.54" Type="Short"/>
+    <Web Code="125675678" Value="www.garik.com" Alias="Заказать столик" Description="Бронирование столиков" IsPromotional="false" IsCommonContact="true" IsHidden="false" IsArchived="false" NotPublish="false" ModificationDate="2014-01-10T09:35:22.54"/>
+    <Email Code="126745678" Value="chel_uptc@mail.ru" Alias="Заказать столик" Description="Бронирование столиков" IsPromotional="false" IsCommonContact="false" IsHidden="false" IsArchived="false" NotPublish="false" ModificationDate="2014-01-10T09:35:22.54"/>
+    <Skype Code="1234564358" Value="KafeGarrrik" Description="Бронирование столиков" IsPromotional="true" IsCommonContact="false" IsHidden="false" IsArchived="false" NotPublish="false" ModificationDate="2014-01-10T09:35:22.54"/>
+    <ICQ Code="123455678" Value="567235" Description="Бронирование столиков" IsPromotional="true" IsCommonContact="false" IsHidden="false" IsArchived="false" NotPublish="false" ModificationDate="2014-01-10T09:35:22.54"/>
+    <Jabber Code="128456678" Value="KafeGarrrik" Description="Бронирование столиков" IsPromotional="true" IsCommonContact="false" IsHidden="false" IsArchived="false" NotPublish="false" ModificationDate="2014-01-10T09:35:22.54"/>
+    <VKontakte Code="1298777678" Value="vk.com/page_name" IsPromotional="false" IsCommonContact="false" IsHidden="false" IsArchived="false" NotPublish="false" ModificationDate="2014-01-10T09:35:22.54"/>
+    <Twitter Code="1545445678" Value="twitter.com/@page_name" IsPromotional="false" IsCommonContact="true" IsHidden="false" IsArchived="true" NotPublish="false" ModificationDate="2014-01-10T09:35:22.54"/>
+    <Facebook Code="8888345678" Value="www.facebook.com/page_name" IsPromotional="false" IsCommonContact="false" IsHidden="true" IsArchived="true" NotPublish="true" ModificationDate="2014-01-10T09:35:22.54"/>
+    <Instagram Code="12999945678" Value="instagram.com/page_name" IsPromotional="false" IsCommonContact="false" IsHidden="false" IsArchived="false" NotPublish="false" ModificationDate="2014-01-10T09:35:22.54"/>
+  </Contacts>
+  <Rubrics>
+    <Rubric Code="450" IsPrimary="true" IsPromotional="false"/>
+    <Rubric Code="132" IsPromotional="true"/>
+  </Rubrics>
+  <Schedules>
+    <Schedule Name="График приема юр.лиц" Comment="Внешние клиенты">
+      <Day Label="Mon" From="08:00:00" To="19:00:00" Comment="Первый рабочий день недели">
+        <Break From="13:00:00" To="13:45:00"/>
+        <Break From="16:15:00" To="16:45:00"/>
+      </Day>
+      <Day Label="Tue" From="08:00:00" To="19:00:00"/>
+      <Day Label="Wed" From="08:00:00" To="19:00:00"/>
+      <Day Label="Thu" From="08:00:00" To="19:00:00"/>
+      <Day Label="Fri" From="08:00:00" To="19:00:00"/>
+      <Day Label="Sat" />
+      <Day Label="Sun" />
+    </Schedule>
+  </Schedules>
+  <Fields>
+    <TextField Value="Уралпромтех" Code="LegalName" IsPublished="false" />
+    <ReferenceField ReferenceCode="OrganizationLegalForm" Value="50000" Code="OrganizationLegalForm" IsPublished="false"/>
+    <TextField Value="научно-производственное предприятие" Code="NameDescription" />
+    <BoolField Value="true" Code="FlampLink" />
+    <BoolField Value="false" Code="LocalityVerification" />
+    <ReferenceListField ReferenceCode="PaymentMethod" Code="PaymentMethod" >
+      <Items>
+        <Item Code="7" />
+      </Items>
+    </ReferenceListField>
+    <ReferenceField ReferenceCode="NumberOfEmployees" Value="1" Code="NumberOfEmployees" />
+    <BoolField Value="false" Comment="" Code="WarmingClient" />
+    <ReferenceField ReferenceCode="IsToLicense" Value="2" Code="ToBeLicensing" />
+    <ReferenceField ReferenceCode="LicenseConfirmation" Value="1" Comment="" Code="RefToLicense" />
+    <ReferenceField ReferenceCode="UpdateSource" Value="23001" Code="UpdateSource" />
+    <TextField Value="15" Code="Office" />
+    <TextField Value="2" Code="Floor" />
+    <DateField Code="some_date_field" Value="2013-06-14T09:35:22.54"/>
+    <DecimalField Code="Bill" Value="500" />
+    <LongField Code="some_long_field" Value="165048062135"/>
+    <LongRangeField Code="some_long_range_field" From="15" To="4842187469"/>
+    <DateRangeField Code="date_range_field" From="2013-01-10T09:35:22.54" To="2013-06-10T09:35:22.54"/>
+    <DecimalRangeField Code="business_lunch_cost" From="120" To="210"/>
+    <TimeRangeField Code="business_lunch_time" From="12:00:00" To="16:00:00"/>
+  </Fields>
+</Card>
