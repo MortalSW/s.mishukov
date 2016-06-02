@@ -30,28 +30,28 @@ namespace lesson10homework
                 {
                     using (StreamWriter promoContactsFile = new StreamWriter(promoFileName))
                     try
+                    {
+                        using (StreamWriter usualContactsFile = new StreamWriter(usualFileName))
                         {
-                            using (StreamWriter usualContactsFile = new StreamWriter(usualFileName))
+                            foreach (XElement contactValue in contactValues)
                             {
-                                foreach (XElement contactValue in contactValues)
+                                if (Convert.ToBoolean(contactValue.Attribute("IsPromotional").Value))
                                 {
-                                    if (Convert.ToBoolean(contactValue.Attribute("IsPromotional").Value))
-                                    {
-                                        promoContactsFile.WriteLine(contactValue.Attribute("Value").Value + " [" +
-                                            (contactValue.Attribute("Description") == null ? "" : contactValue.Attribute("Description").Value) + "]");
-                                    }
-                                    else
-                                    {
-                                        usualContactsFile.WriteLine(contactValue.Attribute("Value").Value + " [" +
-                                            (contactValue.Attribute("Description") == null ? "" : contactValue.Attribute("Description").Value) + "]");
-                                    }
+                                    promoContactsFile.WriteLine(contactValue.Attribute("Value").Value + " [" +
+                                        (contactValue.Attribute("Description") == null ? "" : contactValue.Attribute("Description").Value) + "]");
+                                }
+                                else
+                                {
+                                    usualContactsFile.WriteLine(contactValue.Attribute("Value").Value + " [" +
+                                        (contactValue.Attribute("Description") == null ? "" : contactValue.Attribute("Description").Value) + "]");
                                 }
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            rethrowEx(usualFileName, ex);
-                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        rethrowEx(usualFileName, ex);
+                    }
                 }
                 catch (Exception ex)
                 {
