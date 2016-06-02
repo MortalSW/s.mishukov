@@ -243,3 +243,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/Lesson10/lesson10homework/promoContacts
+/Lesson10/lesson10homework/usualContacts

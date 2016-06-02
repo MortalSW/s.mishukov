@@ -10,53 +10,59 @@ namespace lesson10homework
 {
     class Program
     {
-        private static bool CanAccessFile(string FileName, FileAccess fileAccesMethod)
+        private static void rethrowEx(string fileName, Exception ex)
         {
-            try
-            {
-                FileStream f = new FileInfo(FileName).Open(FileMode.Open, fileAccesMethod, FileShare.None);
-                f.Dispose();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Cannot open " + FileName + " for "+fileAccesMethod);
-                Console.WriteLine("Exception: " + ex.Message);
-            }
-            return false;
+            Console.WriteLine("Cannot open " + fileName);
+            Console.WriteLine("Exception: " + ex.Message);
         }
         static void Main(string[] args)
         {
-            //вот так мне не оч нравится. как лучше доставать директорию проекта?
-            //уменьшив на 2 слэша от AppDomain.CurrentDomain.BaseDirectory - не вариант, то-же самое получается
-            if (CanAccessFile(@"..\..\flowCards.Card.xml", FileAccess.Read))
+            string cardFile = @"..\..\flowCards.Card.xml";
+            XElement[] contactValues;
+            try
             {
-                string text = File.ReadAllText(@"..\..\flowCards.Card.xml");
-                XElement[] contactValues = XElement.Parse(text).Element("Contacts").Elements().ToArray();
-                
-                if (CanAccessFile(@"..\..\p:romoContacts", FileAccess.Write) && 
-                    CanAccessFile(@"..\..\usualContacts", FileAccess.Write))
+                string text = File.ReadAllText(cardFile);
+                contactValues = XElement.Parse(text).Element("Contacts").Elements().ToArray();
+
+                string promoFileName = @"..\..\promoContacts";
+                string usualFileName = @"..\..\usualContacts";
+                try
                 {
-                
-                    using (StreamWriter promoContactsFile = new StreamWriter(@"..\..\promoContacts"))
-                    using (StreamWriter usualContactsFile = new StreamWriter(@"..\..\usualContacts"))
-                    {
-                        foreach (XElement contactValue in contactValues)
+                    using (StreamWriter promoContactsFile = new StreamWriter(promoFileName))
+                    try
                         {
-                            if (contactValue.Attribute("IsPromotional").Value == "true")
+                            using (StreamWriter usualContactsFile = new StreamWriter(usualFileName))
                             {
-                                promoContactsFile.WriteLine(contactValue.Attribute("Value").Value + " [" + 
-                                    (contactValue.Attribute("Description") == null ? "" : contactValue.Attribute("Description").Value.ToString()) + "]");
-                            }
-                            else
-                            {
-                                usualContactsFile.WriteLine(contactValue.Attribute("Value").Value + " [" + 
-                                    (contactValue.Attribute("Description") == null ? "" : contactValue.Attribute("Description").Value.ToString()) + "]");
+                                foreach (XElement contactValue in contactValues)
+                                {
+                                    if (Convert.ToBoolean(contactValue.Attribute("IsPromotional").Value))
+                                    {
+                                        promoContactsFile.WriteLine(contactValue.Attribute("Value").Value + " [" +
+                                            (contactValue.Attribute("Description") == null ? "" : contactValue.Attribute("Description").Value) + "]");
+                                    }
+                                    else
+                                    {
+                                        usualContactsFile.WriteLine(contactValue.Attribute("Value").Value + " [" +
+                                            (contactValue.Attribute("Description") == null ? "" : contactValue.Attribute("Description").Value) + "]");
+                                    }
+                                }
                             }
                         }
-                    }
+                        catch (Exception ex)
+                        {
+                            rethrowEx(usualFileName, ex);
+                        }
+                }
+                catch (Exception ex)
+                {
+                    rethrowEx(promoFileName, ex);
                 }
             }
+            catch (Exception ex)
+            {
+                rethrowEx(cardFile, ex);
+            }
+
             Console.WriteLine("Press a key to exit");
             Console.ReadKey();
         }
