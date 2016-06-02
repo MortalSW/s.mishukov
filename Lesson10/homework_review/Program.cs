@@ -19,14 +19,14 @@ namespace lesson10homework
         {
             string cardFile = @"..\..\flowCards.Card.xml";
             XElement[] contactValues;
-            //try
+            try
             {
                 string text = File.ReadAllText(cardFile);
                 contactValues = XElement.Parse(text).Element("Contacts").Elements().ToArray();
 
                 string promoFileName = @"..\..\promoCont:acts";
                 string usualFileName = @"..\..\usualContacts";
-                //try
+                try
                 {
                     using (StreamWriter promoContactsFile = new StreamWriter(promoFileName))
                     using (StreamWriter usualContactsFile = new StreamWriter(usualFileName))
@@ -46,15 +46,14 @@ namespace lesson10homework
                         }
                     }
                 }
-                //catch (Exception ex)
+                catch (Exception ex)
                 {
-                 //   showEx("?", ex);
-                //    throw ex;
+                    showEx("?", ex);
                 }
             }
-            //catch (Exception ex)
+            catch (Exception ex)
             {
-            //    showEx(cardFile, ex);
+                showEx(cardFile, ex);
             }
 
             Console.WriteLine("Press a key to exit");
